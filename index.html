@@ -12,7 +12,7 @@
             height: 100vh;
             background-color: rgb(20, 51, 136);
             position: relative;
-            color: azure;
+            color: rgb(139, 241, 255);
         }
         .stars{
             position: absolute;
@@ -37,6 +37,24 @@
             border-radius: 50%;
             top: 50%;
             left: 50%;
+        }
+        .notice{
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(155, 155, 155, 0.7);
+            top: 0;
+            left: 0;    
+        }
+        .card{
+            width: 50vw;
+            height: 50vh;
+            border-radius: 10px;
+            background-color: rgb(255, 204, 204);
+            margin: 25vh auto;
+        }
+        .dispalyNone{
+            display: none;
         }
     </style>
 </head>
@@ -75,8 +93,13 @@
          <div class="star"></div>
      </div>
      <div class="moon"></div>
-
-     <button onclick='requestOrientationPermission();'>Request orientation permission</button>
+     <div class="notice dispalyNone">
+         <div class="card">
+             請求裝置開啟Orientation
+            <button onclick='requestOrientationPermission();'>Request orientation permission</button>
+         </div>
+     </div>
+     
      <h1>hello</h1>
       alpha:<span id="alpha"></span><br/>
       beta:<span id="beta"></span><br/>
@@ -85,6 +108,77 @@
     
 </body>
 <script>
+    // 
+    const u = navigator.userAgent;
+    const isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+    const isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+    
+    // 
+    let stars = document.querySelector('.stars');
+    var a = document.getElementById('alpha'),
+        b = document.getElementById('beta'),
+        g = document.getElementById('gamma');
+    // 
+    if(isAndroid){
+        if(window.DeviceOrientationEvent) {
+        window.addEventListener('deviceorientation', function(event) {
+        
+        let     alpha = event.alpha,
+                beta = event.beta,
+                gamma = event.gamma;
+
+                a.innerHTML = Math.round(alpha);
+                b.innerHTML = Math.round(beta);
+                g.innerHTML = Math.round(gamma);
+
+                // 
+                stars.style.left=gamma+'px';
+                stars.style.top=beta+'px';
+
+            }, false);
+        }
+
+    }else if(isiOS){
+        let notice = document.querySelector('.notice');
+        notice.classList.remove('dispalyNone');
+        function requestOrientationPermission(){
+        DeviceOrientationEvent.requestPermission()
+        .then(response => {
+            if (response == 'granted') {
+                window.addEventListener('deviceorientation', (e) => {                    
+                    
+            let     alpha = event.alpha,
+                    beta = event.beta,
+                    gamma = event.gamma;
+
+                    a.innerHTML = Math.round(alpha);
+                    b.innerHTML = Math.round(beta);
+                    g.innerHTML = Math.round(gamma);
+
+                    // 
+            
+                    stars.style.left=gamma+'px';
+                    stars.style.top=beta+'px';
+
+            })
+            }
+           
+        })
+        .catch(console.error)
+    }
+
+    }else{
+        window.addEventListener('mousemove',function(e){
+            let dotX = document.body.offsetWidth/2,
+                dotY = document.body.offsetHeight/2,
+                moveX = e.clientX-dotX,
+                moveY = e.clientY-dotY;       
+                stars.style.left=-moveX+'px';
+                stars.style.top=-moveY+'px';
+            
+        })
+    }
+
     // 
     var userAgentInfo = navigator.userAgent;
     console.log(userAgentInfo)
@@ -111,35 +205,37 @@
     }
 
     // 
-    let stars = document.querySelector('.stars');
+    // let stars = document.querySelector('.stars');
 
-function requestOrientationPermission(){
-        DeviceOrientationEvent.requestPermission()
-        .then(response => {
-            if (response == 'granted') {
-                window.addEventListener('deviceorientation', (e) => {                    
-                    var a = document.getElementById('alpha'),
-                    b = document.getElementById('beta'),
-                    g = document.getElementById('gamma'),
-                    alpha = event.alpha,
-                    beta = event.beta,
-                    gamma = event.gamma;
+// function requestOrientationPermission(){
+//         DeviceOrientationEvent.requestPermission()
+//         .then(response => {
+//             if (response == 'granted') {
+//                 window.addEventListener('deviceorientation', (e) => {                    
+//                     var a = document.getElementById('alpha'),
+//                     b = document.getElementById('beta'),
+//                     g = document.getElementById('gamma'),
+//                     alpha = event.alpha,
+//                     beta = event.beta,
+//                     gamma = event.gamma;
 
-                    a.innerHTML = Math.round(alpha);
-                    b.innerHTML = Math.round(beta);
-                    g.innerHTML = Math.round(gamma);
+//                     a.innerHTML = Math.round(alpha);
+//                     b.innerHTML = Math.round(beta);
+//                     g.innerHTML = Math.round(gamma);
 
-                    // 
+//                     // 
             
-                    stars.style.left=gamma+'px';
-                    stars.style.top=beta+'px';
+//                     stars.style.left=gamma+'px';
+//                     stars.style.top=beta+'px';
 
-            })
-            }
+//             })
+//             }
            
-        })
-        .catch(console.error)
-    }
+//         })
+//         .catch(console.error)
+//     }
+
+
 //     DeviceMotionEvent.requestPermission()
 //     .then(response => {
 //     if (response == 'granted') {
