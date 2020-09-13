@@ -13,9 +13,12 @@
     
 </body>
 <script>
-    if(window.DeviceOrientationEvent) {
-        window.addEventListener('deviceorientation', function(event) {
-  var a = document.getElementById('alpha'),
+    DeviceMotionEvent.requestPermission()
+    .then(response => {
+    if (response == 'granted') {
+        window.addEventListener('devicemotion', (e) => {
+         
+            var a = document.getElementById('alpha'),
           b = document.getElementById('beta'),
           g = document.getElementById('gamma'),
           alpha = event.alpha,
@@ -25,10 +28,27 @@
   a.innerHTML = Math.round(alpha);
   b.innerHTML = Math.round(beta);
   g.innerHTML = Math.round(gamma);
+        })
+    }
+    })
+    .catch(console.error);
 
-    }, false);
-}else{
-    document.querySelector('body').innerHTML = '你的瀏覽器不支援喔';
-};
+//     if(window.DeviceOrientationEvent) {
+//         window.addEventListener('deviceorientation', function(event) {
+//   var a = document.getElementById('alpha'),
+//           b = document.getElementById('beta'),
+//           g = document.getElementById('gamma'),
+//           alpha = event.alpha,
+//           beta = event.beta,
+//           gamma = event.gamma;
+
+//   a.innerHTML = Math.round(alpha);
+//   b.innerHTML = Math.round(beta);
+//   g.innerHTML = Math.round(gamma);
+
+//     }, false);
+// }else{
+//     document.querySelector('body').innerHTML = '你的瀏覽器不支援喔';
+// };
 </script>
 </html>
