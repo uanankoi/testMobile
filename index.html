@@ -20,6 +20,7 @@
             height: 100%;
             top: 0;
             left: 0;
+            pointer-events: none;
         }
         .star{
             position: absolute;
@@ -96,13 +97,14 @@
     let star = document.querySelectorAll('.star');
     for(i=0;i<star.length;i++){
         star[i].index = i;
-        console.log(star[i]);
+        
         star[i].style.top = randomNum(10,90)+'%';
         star[i].style.left = randomNum(10,90)+'%';
         
     }
 
 function requestOrientationPermission(){
+        console.log('star[i]');
         DeviceOrientationEvent.requestPermission()
         .then(response => {
             if (response == 'granted') {
@@ -123,7 +125,7 @@ function requestOrientationPermission(){
             // 
             let stars = document.querySelector('.stars');
             stars.style.left=gamma+'px';
-            stars.style.top=beta+'px'
+            stars.style.top=beta+'px';
         })
         .catch(console.error)
     }
