@@ -146,7 +146,7 @@
         DeviceOrientationEvent.requestPermission()
         .then(response => {
             if (response == 'granted') {
-                notice.classList.add('dispalyNone');
+                notice.style.display='none'
                 window.addEventListener('deviceorientation', (e) => {                    
                     
             let     alpha = event.alpha,
