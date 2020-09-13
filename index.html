@@ -118,6 +118,7 @@
     var a = document.getElementById('alpha'),
         b = document.getElementById('beta'),
         g = document.getElementById('gamma');
+    let notice = document.querySelector('.notice');
     // 
     if(isAndroid){
         if(window.DeviceOrientationEvent) {
@@ -139,13 +140,13 @@
         }
 
     }else if(isiOS){
-        let notice = document.querySelector('.notice');
+        
         notice.classList.remove('dispalyNone');
         function requestOrientationPermission(){
         DeviceOrientationEvent.requestPermission()
         .then(response => {
             if (response == 'granted') {
-                
+                notice.classList.add('dispalyNone');
                 window.addEventListener('deviceorientation', (e) => {                    
                     
             let     alpha = event.alpha,
