@@ -103,8 +103,10 @@
         
     }
 
+    // 
+    let stars = document.querySelector('.stars');
+
 function requestOrientationPermission(){
-        console.log('star[i]');
         DeviceOrientationEvent.requestPermission()
         .then(response => {
             if (response == 'granted') {
@@ -119,13 +121,15 @@ function requestOrientationPermission(){
                     a.innerHTML = Math.round(alpha);
                     b.innerHTML = Math.round(beta);
                     g.innerHTML = Math.round(gamma);
+
+                    // 
+            
+                    stars.style.left=gamma+'px';
+                    stars.style.top=beta+'px';
+
             })
             }
-
-            // 
-            let stars = document.querySelector('.stars');
-            stars.style.left=gamma+'px';
-            stars.style.top=beta+'px';
+           
         })
         .catch(console.error)
     }
