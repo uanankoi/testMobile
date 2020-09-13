@@ -4,6 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test</title>
+    <style>
+        body{
+            padding: 0;
+            margin: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgb(20, 51, 136);
+            position: relative;
+            color: azure;
+        }
+        .stars{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+        .star{
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: rgb(231, 205, 205);
+            border-radius: 50%;
+        }
+        .moon{
+            position: fixed;
+            width: 100px;
+            height: 100px;
+            background-color: rgb(237, 255, 134);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+        }
+    </style>
 </head>
 <body>
     <button onclick='requestOrientationPermission();'>Request orientation permission</button>
@@ -11,16 +45,66 @@
      alpha:<span id="alpha"></span><br/>
      beta:<span id="beta"></span><br/>
      gamma:<span id="gamma"></span><br/>
+     <div class="stars">
+         <div class="star"></div>
+         <div class="star"></div>
+         <div class="star"></div>
+         <div class="star"></div>
+         <div class="star"></div>
+         <div class="star"></div>
+         <div class="star"></div>
+         <div class="star"></div>
+         <div class="star"></div>
+         <div class="star"></div>
+         <div class="star"></div>
+         <div class="star"></div>
+         <div class="star"></div>
+         <div class="star"></div>
+         <div class="star"></div>
+         <div class="star"></div>
+         <div class="star"></div>
+         <div class="star"></div>
+         <div class="star"></div>
+         <div class="star"></div>
+         <div class="star"></div>
+         <div class="star"></div>
+         <div class="star"></div>
+         <div class="star"></div>
+         <div class="star"></div>
+         <div class="star"></div>
+         <div class="star"></div>
+         <div class="star"></div>
+         <div class="star"></div>
+         <div class="star"></div>
+     </div>
+     <div class="moon"></div>
     
 </body>
 <script>
+    // 
+    function randomNum(start,end){
+        let random = Math.floor(Math.random()*end)+1;
+        while(random<start){
+            random = Math.floor(Math.random()*end)+1 
+        }
+        return random
+    }
+
+    // stars
+    let star = document.querySelectorAll('.star');
+    for(i=0;i<star.length;i++){
+        star[i].index = i;
+        console.log(star[i]);
+        star[i].style.top = randomNum(10,90)+'%';
+        star[i].style.left = randomNum(10,90)+'%';
+        
+    }
 
 function requestOrientationPermission(){
         DeviceOrientationEvent.requestPermission()
         .then(response => {
             if (response == 'granted') {
-                window.addEventListener('deviceorientation', (e) => {
-                    
+                window.addEventListener('deviceorientation', (e) => {                    
                     var a = document.getElementById('alpha'),
                     b = document.getElementById('beta'),
                     g = document.getElementById('gamma'),
@@ -33,6 +117,11 @@ function requestOrientationPermission(){
                     g.innerHTML = Math.round(gamma);
             })
             }
+
+            // 
+            let stars = document.querySelector('.stars');
+            stars.style.left=gamma+'px';
+            stars.style.top=beta+'px'
         })
         .catch(console.error)
     }
