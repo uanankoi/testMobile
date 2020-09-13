@@ -6,6 +6,7 @@
     <title>Test</title>
 </head>
 <body>
+    <button onclick='requestOrientationPermission();'>Request orientation permission</button>
     <h1>hello</h1>
      alpha:<span id="alpha"></span><br/>
      beta:<span id="beta"></span><br/>
@@ -13,25 +14,47 @@
     
 </body>
 <script>
-    DeviceMotionEvent.requestPermission()
-    .then(response => {
-    if (response == 'granted') {
-        window.addEventListener('devicemotion', (e) => {
-         
-            var a = document.getElementById('alpha'),
-          b = document.getElementById('beta'),
-          g = document.getElementById('gamma'),
-          alpha = e.alpha,
-          beta = e.beta,
-          gamma = e.gamma;
 
-  a.innerHTML = Math.round(alpha);
-  b.innerHTML = Math.round(beta);
-  g.innerHTML = Math.round(gamma);
+function requestOrientationPermission(){
+        DeviceOrientationEvent.requestPermission()
+        .then(response => {
+            if (response == 'granted') {
+                window.addEventListener('deviceorientation', (e) => {
+                    
+                    var a = document.getElementById('alpha'),
+                    b = document.getElementById('beta'),
+                    g = document.getElementById('gamma'),
+                    alpha = event.alpha,
+                    beta = event.beta,
+                    gamma = event.gamma;
+
+                    a.innerHTML = Math.round(alpha);
+                    b.innerHTML = Math.round(beta);
+                    g.innerHTML = Math.round(gamma);
+            })
+            }
         })
+        .catch(console.error)
     }
-    })
-    .catch(console.error);
+//     DeviceMotionEvent.requestPermission()
+//     .then(response => {
+//     if (response == 'granted') {
+//         window.addEventListener('devicemotion', (e) => {
+         
+//             var a = document.getElementById('alpha'),
+//           b = document.getElementById('beta'),
+//           g = document.getElementById('gamma'),
+//           alpha = e.alpha,
+//           beta = e.beta,
+//           gamma = e.gamma;
+
+//   a.innerHTML = Math.round(alpha);
+//   b.innerHTML = Math.round(beta);
+//   g.innerHTML = Math.round(gamma);
+//         })
+//     }
+//     })
+//     .catch(console.error);
 
 //     if(window.DeviceOrientationEvent) {
 //         window.addEventListener('deviceorientation', function(event) {
