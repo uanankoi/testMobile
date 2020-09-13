@@ -81,9 +81,16 @@
       alpha:<span id="alpha"></span><br/>
       beta:<span id="beta"></span><br/>
       gamma:<span id="gamma"></span><br/>
+      device:<span id="device"></span><br/>
     
 </body>
 <script>
+    // 
+    var userAgentInfo = navigator.userAgent;
+    console.log(userAgentInfo)
+    let device = document.querySelector('#device');
+    device.innerHTML = userAgentInfo;
+
     // 
     function randomNum(start,end){
         let random = Math.floor(Math.random()*end)+1;
